@@ -1,0 +1,7 @@
+.content{
+ text-align: justify;
+ text-indent:35px;
+ line-height:36px;
+ margin-right: 20px;
+ margin-left: 20px;
+}

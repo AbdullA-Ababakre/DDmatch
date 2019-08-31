@@ -1,0 +1,29 @@
+/**index.wxss**/
+
+page{
+  width:100%;
+  height:100%;
+}
+
+ .container{
+  padding-top: 50rpx;
+  padding-bottom: 10rpx;
+   height:20%; 
+} 
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
