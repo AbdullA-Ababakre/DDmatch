@@ -1,0 +1,85 @@
+<view class="container">
+  <view class="title">发起拼伞</view>
+  <view class="weui-cells weui-cells_after-title">
+    <!--出发时间 -->
+    <view class="weui-cell ">
+      <view class="weui-cell__hd">
+        <view class="weui-label">出发时间</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="bindTimeChange">
+          <view class="weui-input">{{time}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <!-- sex -->
+    <view class="weui-cell weui-cell_select">
+      <view class="weui-cell__hd weui-cell__hd_in-select-after">
+        <view class="weui-label">性别</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker bindchange="bindSexChange" value="{{sexIndex}}" range="{{sexs}}">
+          <view class="weui-select weui-select_in-select-after">{{sexs[sexIndex]}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <!-- 起点 -->
+    <!-- <view class="weui-cell weui-cell_select">
+      <view class="weui-cell__hd weui-cell__hd_in-select-after">
+        <view class="weui-label">起点</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker bindchange="bindStartChange" value="{{startIndex}}" range="{{starts}}">
+          <view class="weui-select weui-select_in-select-after">{{starts[startIndex]}}</view>
+        </picker>
+      </view>
+    </view> -->
+
+    <view class="weui-cell ">
+      <view class="weui-cell__hd">
+        <view class="weui-label">起点</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input maxlength="10"  bindinput='watchStart' class="weui-input" placeholder="所在地(最长10个字)"  value="{{start}}"/>
+      </view>
+    </view>
+
+     <view class="weui-cell ">
+      <view class="weui-cell__hd">
+        <view class="weui-label">终点</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input maxlength="10"  bindinput="watchEnd" class="weui-input" placeholder="目的地(最长10个字)" value="{{end}}" />
+      </view>
+    </view>
+
+
+    <!-- link -->
+    <view class="weui-cell weui-cell_select">
+      <view class="weui-cell__hd" style="width: 105px">
+        <picker bindchange="bindLinkChange" value="{{linkIndex}}" range="{{links}}">
+          <view class="weui-select">{{links[linkIndex]}}</view>
+        </picker>
+      </view>
+      <view class="weui-cell__bd weui-cell__bd_in-select-before">
+        <input class="weui-input" placeholder="请输入对应联系方式" bindinput="watchLinkNumber" />
+      </view>
+    </view>
+
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label">报酬:</view>
+      </view>
+      <view class="weui-cell__bd">
+        <textarea name="input2" bindinput='textarea_inputs' class="weui-textarea" placeholder="5块钱/一杯奶茶..." maxlength="{{maxLength}}" style="height:3.3em" placeholder-class="placeHolder" />
+        <view class="weui-textarea-counter">{{textarea_curWordNum}}/100</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="page__bd page__bd_spacing" style='margin:50rpx 50px;' bindtap='submitForm'>
+    <button class="weui-btn" type="primary" form-type='submit'>发布</button>
+  </view>
+</view>

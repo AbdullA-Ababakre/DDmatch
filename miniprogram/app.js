@@ -6,7 +6,7 @@ App({
     } else {
       wx.cloud.init({
         traceUser: true,
-        // env:''
+        env:'umbrella-lzx6k'
       })
     }
     this.globalData = {}

@@ -1,0 +1,83 @@
+page{
+  background-color: #dfdfdf;
+}
+.title{
+  font-size: 60rpx;
+  text-align: center;
+}
+.block:not(:first-child){
+  margin-top:50rpx;
+}
+
+
+/*  按钮样式 */
+.add{
+  position: fixed;
+  bottom: 0;
+  height: 100rpx;
+  width:400rpx;
+  left:50%;
+  margin-left:-200rpx;
+}
+
+.add-item{
+  width:100rpx;
+  height: 100rpx;
+  background-color: #33c9ff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
+  color: #fff;
+  position: absolute;
+  bottom: 30rpx;
+  left: 50%;
+  margin-left:-50rpx;
+  transition: transform 0.3s cubic-bezier(0.42, 0, 0.58, 1), -webkit-transform 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+
+}
+
+.add-icon{
+  width:120rpx;
+  height: 120rpx;
+  background-color: #33c9ff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 80rpx;
+  color: #fff;
+  position: absolute;
+  bottom: 30rpx;
+  left:50%;
+  margin-left:-60rpx;
+}
+.add-icon-txt{
+  margin-top: -10rpx;
+}
+
+.active .add-item:nth-of-type(1){
+  transform:rotate(10deg) translate(-140rpx);
+}
+.active .add-item:nth-of-type(1) .add-item-txt{
+  transform: rotate(-10deg);
+}
+
+.active .add-item:nth-of-type(2){
+  transform:rotate(90deg) translate(-140rpx);
+}
+.active .add-item:nth-of-type(2) .add-item-txt{
+  transform: rotate(-90deg);
+}
+
+.active .add-item:nth-of-type(3){
+  transform:rotate(170deg) translate(-140rpx);
+}
+.active .add-item:nth-of-type(3) .add-item-txt{
+  transform: rotate(-170deg);
+}
+
+.addIconRotate{
+  transform: rotate(30deg);
+}
