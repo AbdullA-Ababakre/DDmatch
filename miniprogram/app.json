@@ -1,11 +1,11 @@
 {
   "pages": [
-    "pages/aboutMe/myGet/myGet",
     "pages/show/show",
+    "pages/aboutMe/mySent/mySent",
+    "pages/aboutMe/myGet/myGet",
     "pages/order/order",
     "pages/aboutMe/aboutMe",
-    "pages/index/index",
-    "pages/aboutMe/mySent/mySent"
+    "pages/index/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

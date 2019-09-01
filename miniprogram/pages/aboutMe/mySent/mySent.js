@@ -5,13 +5,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+   arr:[]
   },
 
   //  生命周期函数--监听页面显示
 
   onShow: function () {
-
     this.getReceiver().then(res => {
       wx.cloud.callFunction({
         // 要调用的云函数名称
@@ -22,6 +21,11 @@ Page({
         }
       }).then(res => { // 成功
         console.log("success", res.result.data);
+        let data = res.result.data;
+        this.setData({
+          arr:data
+        })
+        console.log(data)
       }).catch(err => {
         console.log("fail", err);
       })

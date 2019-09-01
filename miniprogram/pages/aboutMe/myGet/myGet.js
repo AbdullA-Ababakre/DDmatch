@@ -40,7 +40,9 @@ Page({
         reject(res)
       })
     });
-
+  },
+  scroll: function (e) {
+    // console.log(e)
   }
 
 })

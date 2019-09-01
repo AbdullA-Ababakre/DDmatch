@@ -82,4 +82,5 @@
   <view class="page__bd page__bd_spacing" style='margin:50rpx 50px;' bindtap='submitForm'>
     <button class="weui-btn" type="primary" form-type='submit'>发布</button>
   </view>
+  
 </view>

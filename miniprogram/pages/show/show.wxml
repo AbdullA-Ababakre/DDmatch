@@ -25,6 +25,7 @@
       <view id="{{item._id}}" class="weui-form-preview__ft" bindtap="getOrder">
         <view class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">接单</view>
       </view>
+    
     </view>
   </block>
   <view style="height:150rpx"></view>

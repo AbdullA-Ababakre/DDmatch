@@ -91,6 +91,9 @@ Page({
     })
   },
 
+
+  
+
   getOrder: function(event) {
     let that = this;
     // 判断有无权限
@@ -163,7 +166,8 @@ Page({
         console.log('fail', e)
       }
     })
-
   },
+
+
 
 })

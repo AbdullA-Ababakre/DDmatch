@@ -101,10 +101,16 @@ Page({
         }
       }).then(res => { // 成功
         //console.log(res.result)
+      
+
+        // jump to the show page
+        wx.navigateBack({
+          url: '/pages/show/show'
+        });
         wx.showToast({
           title: '发布成功',
           icon: 'success',
-          duration: 2000
+          duration: 1000
         });
       }).catch(err => { // 失败
         console.log(err)
