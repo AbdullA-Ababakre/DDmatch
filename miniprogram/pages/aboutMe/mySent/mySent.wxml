@@ -23,8 +23,13 @@
             <view class="weui-form-preview__value">{{item.money}}</view>
           </view>
         </view>
-      </view>
 
+        <view id="{{item._id}}" class="weui-form-preview__ft">
+          <view wx:if="{{item.receiver!==''}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">已经有人接单</view>
+          <view wx:else class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">还没被接</view>
+        </view>
+      </view>
+      
     </block>
     <view style="height:150rpx"></view>
   </scroll-view>

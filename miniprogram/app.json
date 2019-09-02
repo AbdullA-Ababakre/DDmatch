@@ -1,8 +1,8 @@
 {
   "pages": [
-    "pages/show/show",
     "pages/aboutMe/mySent/mySent",
     "pages/aboutMe/myGet/myGet",
+    "pages/show/show",
     "pages/order/order",
     "pages/aboutMe/aboutMe",
     "pages/index/index"

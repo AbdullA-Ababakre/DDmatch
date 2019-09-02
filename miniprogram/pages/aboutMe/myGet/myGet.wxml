@@ -24,7 +24,8 @@
         </view>
         <view id="{{item._id}}" class="weui-form-preview__ft">
           <view class="weui-form-preview__label alert">联系方式:</view>
-          <view class="weui-form-preview__value">{{item.link}}</view>
+          <text class="weui-form-preview__value" selectable="true">{{item.link}}</text>
+          <button class="btn" data-name="{{item.link}}" bindtap="copyTBL">点击复制</button>
         </view>
       </view>
 

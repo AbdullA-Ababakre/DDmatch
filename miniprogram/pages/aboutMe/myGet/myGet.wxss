@@ -9,10 +9,19 @@ page{
 }
 .alert{
   margin-left:30rpx;
-  font-size:50rpx;
+  font-size:30rpx;
   color:red;
 }
 
 .weui-form-preview {
  margin-bottom: 50rpx;
+}
+weui-form-preview__ft{
+  position: relative;
+}
+.btn{
+  position: absolute;
+  right: 5%;
+  width:200rpx;
+ 
 }

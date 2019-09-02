@@ -79,5 +79,5 @@ page{
 }
 
 .addIconRotate{
-  transform: rotate(30deg);
+  transform: rotate(45deg);
 }
