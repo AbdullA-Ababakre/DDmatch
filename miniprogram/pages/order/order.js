@@ -83,9 +83,9 @@ Page({
       })
       return;
     }
+
     this.getReceiver().then(res => {
       let openid = res;
-      console.log("openIDDDD", openid);
       wx.cloud.callFunction({
         // 要调用的云函数名称
         name: 'addUmbrella',
@@ -101,24 +101,43 @@ Page({
         }
       }).then(res => { // 成功
         //console.log(res.result)
-      
 
         // jump to the show page
         wx.navigateBack({
           url: '/pages/show/show'
         });
-        wx.showToast({
-          title: '发布成功',
-          icon: 'success',
-          duration: 1000
-        });
+
+        // wx.showToast({
+        //   title: '多多分享,成功率会大大提高哦!!',
+        //   icon: 'none',
+        //   duration: 4000
+        // });
+        //  需要手写一个showModal,不然不能搞点击分享
+        // https://juejin.im/post/5ca9b058e51d452b0f3346d0
+        wx.showModal({
+          title: '分享到更多的群!!',
+          content: '多分享，提高成功率哦!!',
+          confirmText: '分享',
+          cancelText:'残忍拒绝',
+          confirmColor: '#33c9ff',
+          success: function(res) {
+            if (res.cancel) {
+              //点击取消
+              console.log("您点击了取消")
+            } else if (res.confirm) {
+              //点击确定
+              console.log("您点击了确定")
+            }
+          }
+        })
+
       }).catch(err => { // 失败
         console.log(err)
       })
     });
   },
   getReceiver() {
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
       wx.cloud.callFunction({
         // 要调用的云函数名称
         name: 'login'

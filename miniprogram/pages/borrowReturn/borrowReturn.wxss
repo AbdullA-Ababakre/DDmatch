@@ -1,0 +1,53 @@
+page, .page, .page__bd {
+  height: 100%;
+  background-color: #f8f8f8;
+}
+
+.page__bd {
+  padding-bottom: 0;
+}
+
+.weui-navbar {
+  background-color: white;
+}
+
+.weui-tab__content {
+  padding-top: 80rpx;
+  text-align: left;
+}
+
+.weui-cell {
+  margin-top: 0;
+}
+
+.weui-btn:first-child {
+  margin-top: 15px;
+}
+
+.weui-tab_panel{
+  overflow:none;
+}
+page{
+  overflow-x:none;
+}
+.weui-navbar__title{
+  overflow: none;
+}
+.weui-tab__panel{
+overflow:none;
+}
+
+.weui-cell.weui-cell_input:nth-child(0){
+  border: 10px soild red;
+}
+
+.picker{
+  padding: 20rpx 20rpx 20rpx 0;
+}
+.weui-label{
+ width:120px;
+}
+
+.weui-cells_after-title{
+  margin-top:-20px;
+}

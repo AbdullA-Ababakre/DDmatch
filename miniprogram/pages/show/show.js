@@ -10,12 +10,12 @@ Page({
     showIconRotate: false
   },
   getReceiver() {
-    return new Promise( function(resolve,reject){
+    return new Promise(function(resolve, reject) {
       wx.cloud.callFunction({
         // 要调用的云函数名称
         name: 'login'
       }).then(res => { // 成功
-        resolve( res.result.openid)
+        resolve(res.result.openid)
       }).catch(res => {
         reject(res)
       })
@@ -30,11 +30,9 @@ Page({
       }
       // 传递给云函数的event参数
     }).then(res => { // 成功
-      console.log(res);
       this.setData({
         arr: res.result.data
       })
-
     }).catch(err => { // 失败
       console.log(err)
     })
@@ -42,6 +40,7 @@ Page({
   scroll: function(e) {
     // console.log(e)
   },
+  // 是否展开+ 
   onToggle: function() {
     this.setData({
       showToolBar: !this.data.showToolBar
@@ -79,7 +78,9 @@ Page({
         console.log('fail', e)
       }
     })
+
   },
+
   onPersonal: function() {
     wx.navigateTo({
       url: '/pages/aboutMe/aboutMe'
@@ -91,8 +92,6 @@ Page({
     })
   },
 
-
-  
 
   getOrder: function(event) {
     let that = this;
@@ -111,7 +110,7 @@ Page({
               console.log("id--", id);
               // 获取openid
               let receiver;
-              that.getReceiver().then(res =>{
+              that.getReceiver().then(res => {
                 let receiver = res;
                 console.log('接单：', receiver);
                 // 确认接单 
@@ -167,7 +166,36 @@ Page({
       }
     })
   },
+  onBorrowReturn: function() {
+    // 先确认是否进行授权
+    wx.getUserInfo({
+      // 用户已经授权
+      success(e) {
+        wx.navigateTo({
+          url: '/pages/borrowReturn/borrowReturn',
+        })
+      },
+      // 用户还没有授权
+      fail(e) {
+        // 提示尚未获取授权
+        wx.showModal({
+          title: '尚未授权',
+          content: '请到个人页面手动授权',
+          success(res) {
+            if (res.confirm) {
+              console.log('用户点击确定')
+              // 自动跳转到个人页面去授权
+              wx.navigateTo({
+                url: '/pages/aboutMe/aboutMe',
+              })
+            } else if (res.cancel) {
+              console.log('用户点击取消');
+            }
+          }
+        })
+        console.log('fail', e)
+      }
+    })
 
-
-
+  }
 })

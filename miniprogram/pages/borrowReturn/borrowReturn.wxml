@@ -1,0 +1,110 @@
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+  <view class="page__bd">
+    <view class="weui-tab">
+      <view class="weui-navbar">
+        <block wx:for="{{tabs}}" wx:key="*this">
+          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+            <view class="weui-navbar__title">{{item}}</view>
+          </view>
+        </block>
+        <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+      </view>
+      <view class="weui-tab__panel">
+        <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+          <!-- 借伞的内容 -->
+          <form bindsubmit=''>
+            <view class="weui-cells weui-cells_after-title">
+              <view class="weui-cell ">
+                <view class="weui-cell__hd">
+                  <view class="weui-label">姓名</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input class="weui-input" placeholder="请输入姓名"  bindinput="getBorrowName"/>
+                </view>
+              </view>
+              <view class="weui-cell ">
+                <view class="weui-cell__hd">
+                  <view class="weui-label">手机号</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input class="weui-input" placeholder="请输入手机号"  bindinput="getBorrowPhone"/>
+                </view>
+              </view>
+              <view class="weui-cell ">
+                <view class="weui-cell__hd">
+                  <view class="weui-label">学号</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input class="weui-input" placeholder="请输入学号" bindinput="getBorrowCard" />
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_select">
+                <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                  <view class="weui-label">借伞地点</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <picker bindchange="bindBorrowLocationChange" value="{{borrowLocationIndex}}" range="{{borrowLocations}}">
+                    <view class="weui-select weui-select_in-select-after">
+                                {{borrowLocations[borrowLocationIndex]}}
+                    </view>
+                  </picker>
+                </view>
+              </view>
+            </view>
+            <view style='margin: 10px 20px' bindtap='borrowUmbrella'>
+              <button class="weui-btn" type="primary" form-type='submit'>借伞</button>
+            </view>
+          </form>
+        </view>
+
+        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+          <!-- 还伞的内容 -->
+          <form>
+            <view class="weui-cells weui-cells_after-title">
+              <view class="weui-cell ">
+                <view class="weui-cell__hd">
+                  <view class="weui-label">姓名</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input class="weui-input" placeholder="请输入姓名" />
+                </view>
+              </view>
+              <view class="weui-cell ">
+                <view class="weui-cell__hd">
+                  <view class="weui-label">手机号</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input class="weui-input" placeholder="请输入手机号" />
+                </view>
+              </view>
+              <view class="weui-cell ">
+                <view class="weui-cell__hd">
+                  <view class="weui-label">学号</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input class="weui-input" placeholder="请输入学号" />
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_select">
+                <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                  <view class="weui-label">还伞地点</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <picker bindchange="bindReturnLocationChange" value="{{returnLocationIndex}}" range="{{returnLocations}}">
+                    <view class="weui-select weui-select_in-select-after">
+                      {{returnLocations[returnLocationIndex]}}
+                    </view>
+                  </picker>
+                </view>
+              </view>
+
+            </view>
+            <view class="page__bd page__bd_spacing" style='margin: 10px 20px' bindtap='returnUmbrella'>
+              <button class="weui-btn" type="primary" form-type='submit'>还伞</button>
+            </view>
+          </form>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

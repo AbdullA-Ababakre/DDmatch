@@ -32,11 +32,12 @@
 
 </scroll-view>
 
+
 <view class="add {{showToolBar?'active':''}}">
   <view class="add-item" data-type="0" bindtap="onAdd">
     <text class="add-item-txt">拼伞</text>
   </view>
-  <view class="add-item" data-type="1">
+  <view class="add-item" data-type="1" bindtap="onBorrowReturn">
     <text class="add-item-txt">借还伞</text>
   </view>
   <view class="add-item" data-type="2" bindtap="onPersonal">
