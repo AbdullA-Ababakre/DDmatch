@@ -83,7 +83,7 @@ Page({
       })
       return;
     }
-
+    
     this.getReceiver().then(res => {
       let openid = res;
       wx.cloud.callFunction({
@@ -118,9 +118,9 @@ Page({
           title: '分享到更多的群!!',
           content: '多分享，提高成功率哦!!',
           confirmText: '分享',
-          cancelText:'残忍拒绝',
+          cancelText: '残忍拒绝',
           confirmColor: '#33c9ff',
-          success: function(res) {
+          success: function (res) {
             if (res.cancel) {
               //点击取消
               console.log("您点击了取消")
@@ -135,7 +135,9 @@ Page({
         console.log(err)
       })
     });
+    
   },
+
   getReceiver() {
     return new Promise(function(resolve, reject) {
       wx.cloud.callFunction({
