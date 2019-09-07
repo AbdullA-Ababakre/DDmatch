@@ -57,9 +57,10 @@
           </form>
         </view>
 
-        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+        <view class="weui-tab__content content-more" hidden="{{activeIndex != 1}}">
           <!-- 还伞的内容 -->
           <form>
+            <view style="margin-bottom:30px;">请保证所填信息跟借伞时的一致(除还伞地点)</view>
             <view class="weui-cells weui-cells_after-title">
               <view class="weui-cell ">
                 <view class="weui-cell__hd">

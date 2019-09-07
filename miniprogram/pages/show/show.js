@@ -1,13 +1,35 @@
 // miniprogram/pages/show/show.js
-Page({
+const app = getApp();
 
+function fixZero(val){
+   if(val<10){
+     val='0'+val;
+   }
+   return val;
+}
+
+Page({
   /**
    * 页面的初始数据
    */
   data: {
     arr: [],
     showToolBar: false,
-    showIconRotate: false
+    showIconRotate: false,
+    todayMonth:'',
+    todayDate:'',
+    flag: app.globalData.showOverlay
+  },
+  onLoad(){
+     let now=new Date();
+     let month=fixZero(now.getMonth()+1);
+     let date=fixZero(now.getDate());
+     this.setData({
+      todayMonth:month,
+      todayDate:date
+     });
+
+     console.log("onload",app.globalData.showOverlay);
   },
   getReceiver() {
     return new Promise(function(resolve, reject) {
@@ -22,16 +44,32 @@ Page({
     });
   },
   onShow: function(options) {
+    this.setData({
+      flag:app.globalData.showOverlay
+    });
+
     wx.cloud.callFunction({
       // 要调用的云函数名称
       name: 'getUmbrellaList',
       data: {
         status: "todo"
       }
-      // 传递给云函数的event参数
+      // 传递给云函数的event参数   .start_time
     }).then(res => { // 成功
+      let resArr=res.result.data;
+      
+      // 为了更好的展示时间
+      for(let i=0;i<resArr.length;i++){
+        let otherString=resArr[i].start_time.substring(8,resArr[i].start_time.length);
+        // console.log(resArr[i].start_time.slice(0,8));
+        // console.log('('+this.data.todayMonth+'-'+this.data.todayDate+'日)');
+        if(resArr[i].start_time.slice(0,8)==='('+this.data.todayMonth+'-'+this.data.todayDate+'日)'){
+           resArr[i].start_time="(今天)"+otherString;
+        }
+      }
+
       this.setData({
-        arr: res.result.data
+        arr:resArr
       })
     }).catch(err => { // 失败
       console.log(err)
@@ -197,5 +235,30 @@ Page({
       }
     })
 
-  }
-})
+  },
+
+  cancelShare:function(){
+    console.log("helloC");
+    app.globalData.showOverlay=false;
+    this.setData({
+      flag: app.globalData.showOverlay
+    })
+  },
+  shureShare:function(){
+    // share to other users
+    //  this.onShareAppMessage();
+     
+    app.globalData.showOverlay = false;
+    this.setData({
+      flag: app.globalData.showOverlay
+    });
+  },
+
+  // onShareAppMessage(){
+  //     return {
+  //       title:'快来跟我拼伞哦!!',
+  //       imageUrl:'/miniprogram/images/umbrellaLogo.jpeg'
+  //     }
+  // }
+   
+});

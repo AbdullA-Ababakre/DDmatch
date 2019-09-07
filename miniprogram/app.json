@@ -1,12 +1,12 @@
 {
   "pages": [
+    "pages/aboutMe/myBorrow/myBorrow",
     "pages/show/show",
     "pages/borrowReturn/borrowReturn",
-    "pages/order/order",
     "pages/aboutMe/mySent/mySent",
     "pages/aboutMe/myGet/myGet",
+    "pages/order/order",
     "pages/aboutMe/aboutMe"
-    
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

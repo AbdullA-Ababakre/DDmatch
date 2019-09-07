@@ -1,5 +1,12 @@
 const app = getApp()
 
+function fixZero(val){
+   if(val<10){
+     val='0'+val;
+   }
+   return val;
+}
+
 Page({
   data: {
     time: "12:01",
@@ -16,16 +23,14 @@ Page({
   },
   onLoad() {
     let now = new Date();
-    let hour = now.getHours();
-    let min = now.getMinutes();
-    if (hour < 10) {
-      hour = '0' + hour;
-    }
-    if (min < 10) {
-      min = '0' + min;
-    }
+    let year=now.getFullYear();
+    let month=fixZero(now.getMonth()+1);
+    let date=fixZero(now.getDate());
+    let hour =fixZero(now.getHours());
+    let min = fixZero(now.getMinutes());
+     
     this.setData({
-      time: hour + ':' + min
+      time:hour + ':' + min
     })
   },
   bindTimeChange: function(e) {
@@ -86,6 +91,12 @@ Page({
     
     this.getReceiver().then(res => {
       let openid = res;
+      
+      let now = new Date();
+      let year = now.getFullYear();
+      let month = fixZero(now.getMonth() + 1);
+      let date = fixZero(now.getDate());
+
       wx.cloud.callFunction({
         // 要调用的云函数名称
         name: 'addUmbrella',
@@ -97,39 +108,18 @@ Page({
           link: '( ' + this.data.links[this.data.linkIndex] + ' ) ' + this.data.linkNumber, // 联系方式
           money: this.data.dec, // 报酬
           sex: this.data.sexs[this.data.sexIndex], // 性别
-          start_time: this.data.time // 出发时间
+          start_time:'('+month+'-'+date+'日)' + this.data.time // 出发时间
         }
       }).then(res => { // 成功
         //console.log(res.result)
-
+        
+        app.globalData.showOverlay = true;   //改变全局变量
+      
+       
         // jump to the show page
         wx.navigateBack({
           url: '/pages/show/show'
         });
-
-        // wx.showToast({
-        //   title: '多多分享,成功率会大大提高哦!!',
-        //   icon: 'none',
-        //   duration: 4000
-        // });
-        //  需要手写一个showModal,不然不能搞点击分享
-        // https://juejin.im/post/5ca9b058e51d452b0f3346d0
-        wx.showModal({
-          title: '分享到更多的群!!',
-          content: '多分享，提高成功率哦!!',
-          confirmText: '分享',
-          cancelText: '残忍拒绝',
-          confirmColor: '#33c9ff',
-          success: function (res) {
-            if (res.cancel) {
-              //点击取消
-              console.log("您点击了取消")
-            } else if (res.confirm) {
-              //点击确定
-              console.log("您点击了确定")
-            }
-          }
-        })
 
       }).catch(err => { // 失败
         console.log(err)

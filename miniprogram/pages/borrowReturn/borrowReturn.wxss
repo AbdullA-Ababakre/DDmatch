@@ -51,3 +51,6 @@ overflow:none;
 .weui-cells_after-title{
   margin-top:-20px;
 }
+.content-more{
+  padding-top:10px;
+}

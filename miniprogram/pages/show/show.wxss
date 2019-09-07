@@ -81,3 +81,52 @@ page{
 .addIconRotate{
   transform: rotate(45deg);
 }
+
+
+/* 中间showModel的样式*/
+.nodisplay{
+  display:none;
+}
+.overlay {
+    /* TODO: 需设置蒙层 overlay 相对于浏览器窗口进行绝对定位 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 4000;
+}
+.dialog {
+    width: 280px;
+    text-align: center;
+    position: fixed;
+    background: #fff;
+    z-index: 4001;
+    border-radius: 5px;
+    /* TODO: 需设置dialog上下居中展示 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.dialog .dialog-bd {
+    padding: 20px 10px;
+}
+
+.dialog .dialog-ft {
+    display: flex;
+    line-height: 44px;
+    border-top: 1px solid #dbdbdb;
+}
+
+.dialog .dialog-ft .ft-btn {
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+    border-left: 1px solid #dbdbdb;
+}
+
+.dialog .dialog-ft .ft-btn:first-child {
+    border-left: 0;
+}

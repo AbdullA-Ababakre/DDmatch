@@ -32,10 +32,10 @@ Page({
     returnCard: '',
     returnLocation: '',     //returnLocations[returnLocationIndex]   //必须是还伞地点的第一个值
   },
-  onLoad: function() {
+  onLoad: function () {
     var that = this;
     wx.getSystemInfo({
-      success: function(res) {
+      success: function (res) {
         that.setData({
           sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
           sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
@@ -49,7 +49,7 @@ Page({
     });
   },
 
-  bindBorrowLocationChange: function(e) {
+  bindBorrowLocationChange: function (e) {
     this.setData({
       borrowLocationIndex: e.detail.value,
       borrowLocation: this.data.borrowLocations[e.detail.value]
@@ -57,7 +57,7 @@ Page({
 
   },
 
-  bindReturnLocationChange: function(e) {
+  bindReturnLocationChange: function (e) {
     console.log('picker return place 发生选择改变，携带值为', e.detail.value);
     this.setData({
       returnLocationIndex: e.detail.value,
@@ -65,45 +65,45 @@ Page({
     })
 
   },
-  tabClick: function(e) {
+  tabClick: function (e) {
     this.setData({
       sliderOffset: e.currentTarget.offsetLeft,
       activeIndex: e.currentTarget.id
     });
   },
-  getBorrowName: function(e) {
+  getBorrowName: function (e) {
     let name = e.detail.value;
     this.setData({
       borrowName: name
     });
   },
-  getBorrowPhone: function(e) {
+  getBorrowPhone: function (e) {
     let phone = e.detail.value;
     this.setData({
       borrowPhone: phone
     });
   },
-  getBorrowCard: function(e) {
+  getBorrowCard: function (e) {
     let card = e.detail.value;
     this.setData({
       borrowCard: card
     });
 
   },
-  getReturnName: function(e) {
+  getReturnName: function (e) {
     let name = e.detail.value;
     this.setData({
       returnName: name
     });
   },
-  getReturnPhone: function(e) {
+  getReturnPhone: function (e) {
     let phone = e.detail.value;
     this.setData({
       returnPhone: phone
     })
   },
-  setBorrowTime:function(){
-      // record the borrow time
+  setBorrowTime: function () {
+    // record the borrow time
     let time = new Date();
     let year = time.getFullYear();
     let month = fixZero(time.getMonth() + 1);
@@ -114,22 +114,36 @@ Page({
       borrowTime: year + '-' + month + '-' + date + '-' + hour + '-' + min
     })
   },
-  getReturnCard: function(e) {
+  getReturnCard: function (e) {
     let card = e.detail.value;
     this.setData({
       returnCard: card
     });
   },
-  getReturnLocation: function(e) {
+  getReturnLocation: function (e) {
     let location = e.detail.value;
     this.setData({
       returnLocation: location
     });
   },
-  checkIsFirstBorrow(){
+  async checkIsFirstBorrow() {
+    // 要验证借过一次伞的人不能再借
+    let borrowName = this.data.borrowName;
+    let borrowCard = this.data.borrowCard;
+    let borrowPhone = this.data.borrowPhone;
 
+    let res = await wx.cloud.callFunction({
+      // 要调用的函数
+      name: 'borrowCheck',
+      data: {
+        borrowName: borrowName,
+        borrowPhone: borrowPhone,
+        borrowCard: borrowCard
+      }
+    });
+    return res;
   },
-  borrowUmbrella: function() {
+  borrowUmbrella: function () {
     // validation
     if ((!this.data.borrowName) || (!this.data.borrowPhone) || (!this.data.borrowCard)) {
       wx.showToast({
@@ -139,75 +153,61 @@ Page({
       return;
     }
 
-   this.setBorrowTime();
-  
-  // 要验证借过一次伞的人不能再借
-   let borrowEdArr=[];
-    let borrowName=this.data.borrowName;
-    let borrowCard=this.data.borrowCard;
-    let borrowPhone=this.data.borrowPhone;
-  
-      wx.cloud.callFunction({
-        // 要调用的函数
-        name: 'borrowCheck',
-        data: {
-          borrowName: borrowName,
-          borrowPhone: borrowPhone,
-          borrowCard: borrowCard
-        }
-      }).then(res => {
-       borrowEdArr = res.result.data;
-      }).catch(err => {
-        console.log(err);
-      });
+    this.setBorrowTime();
 
-      if(borrowEdArr){
+    let borrowEdArr = [];
+    let flag;
+    let result = this.checkIsFirstBorrow();
+    result.then(res => {
+      borrowEdArr = res.result.data;
+      
+      if (borrowEdArr.length === 0) {
+        // 向服务器提交数据
+        this.getReceiver().then(res => {
+          let openid = res;
+          wx.cloud.callFunction({
+            // 要调用的函数
+            name: 'borrowumbrella',
+            data: {
+              user: openid,
+              borrowTime: this.data.borrowTime,
+              borrowName: this.data.borrowName,
+              borrowPhone: this.data.borrowPhone,
+              borrowCard: this.data.borrowCard,
+              borrowLocation: this.data.borrowLocation
+            }
+          }).then(res => {
+            // confirm the borrowed umbrella
+            wx.showModal({
+              title: '借伞成功',
+              content: '请出示给工作人员,请24小时内归还',
+              success(res) {
+                if (res.confirm) {
+                  console.log('用户点击确定')
+                  wx.showToast({
+                    title: '借伞成功'
+                  })
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
+          }).catch(err => {
+            console.log(err);
+          })
+        })
+      }else{
         wx.showToast({
-          title:'你有没还的伞,不能再借伞',
+          title:'你有没还的伞,不能借伞',
           icon:'none'
         })
-        return;
       }
+    });
 
-  
-    // 向服务器提交数据
-    this.getReceiver().then(res => {
-      let openid = res;
-      wx.cloud.callFunction({
-        // 要调用的函数
-        name: 'borrowumbrella',
-        data: {
-          user: openid,
-          borrowTime: this.data.borrowTime,
-          borrowName: this.data.borrowName,
-          borrowPhone: this.data.borrowPhone,
-          borrowCard: this.data.borrowCard,
-          borrowLocation: this.data.borrowLocation
-        }
-      }).then(res => {
-        // confirm the borrowed umbrella
-        wx.showModal({
-          title: '借伞成功',
-          content: '请出示给工作人员,请24小时内归还',
-          success(res) {
-            if (res.confirm) {
-              console.log('用户点击确定')
-              wx.showToast({
-                title: '借伞成功'
-              })
-            } else if (res.cancel) {
-              console.log('用户点击取消')
-            }
-          }
-        })
-      }).catch(err => {
-        console.log(err);
-      })
-    })
   },
 
-  setReturnTime:function(){
-       // record the borrow time
+  setReturnTime: function () {
+    // record the borrow time
     let time = new Date();
     let year = time.getFullYear();
     let month = fixZero(time.getMonth() + 1);
@@ -219,7 +219,7 @@ Page({
     })
   },
 
-  returnUmbrella: function() {
+  returnUmbrella: function () {
     // validation
     if ((!this.data.returnName) || (!this.data.returnPhone) || (!this.data.returnCard)) {
       wx.showToast({
@@ -228,10 +228,10 @@ Page({
       })
       return;
     }
-     
+
     // set return time
     this.setReturnTime();
-     
+
     let returnName = this.data.returnName;
     let returnPhone = this.data.returnPhone;
     let returnCard = this.data.returnCard;
@@ -257,8 +257,8 @@ Page({
         wx.cloud.callFunction({
           // 要调用的函数
           name: 'returnUmbrella',
-          data:{
-            id:id
+          data: {
+            id: id
           },
         }).then(res => {
           console.log("delete--", res);
@@ -270,7 +270,7 @@ Page({
     });
   },
   getReceiver() {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       wx.cloud.callFunction({
         // 要调用的云函数名称
         name: 'login'
