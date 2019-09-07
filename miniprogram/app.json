@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/aboutMe/myBorrow/myBorrow",
     "pages/show/show",
+    "pages/aboutMe/myBorrow/myBorrow",
     "pages/borrowReturn/borrowReturn",
     "pages/aboutMe/mySent/mySent",
     "pages/aboutMe/myGet/myGet",

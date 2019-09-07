@@ -8,20 +8,16 @@ Page({
     this.getReceiver().then(res => {
       wx.cloud.callFunction({
         // 要调用的云函数名称
-        name: 'getMyUmbrellas',
+        name: 'getBorrows',
         data: {
-          user: "user", // 发布者：user or 接单者：receiver
           openid: res
         }
       }).then(res => { // 成功
         console.log("success", res.result.data);
-        // let flag=true;
-        // console.log("ressss--",res.result.data.receiver);
         let data = res.result.data;
         this.setData({
           arr: data
         })
-        console.log(data)
       }).catch(err => {
         console.log("fail", err);
       })
