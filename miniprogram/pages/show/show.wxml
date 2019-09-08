@@ -56,7 +56,7 @@
    <view>多多分享,可以提高成功率哦!!</view>
  </view>
  <view class="dialog-ft">
-    <view class="ft-btn" bindtap="cancelShare">残忍拒绝</view>
-    <view class="ft-btn" bindtap="shureShare" style="background-color:blue;color:white;">分享!!!!</view>
+    <button class="ft-btn" bindtap="cancelShare">残忍拒绝</button>
+    <button class="ft-btn" bindtap="shureShare" style="background-color:blue;color:white;" data-name="shareBtn" open-type="share" plain="true">分享!!!!</button>
  </view>
 </view>

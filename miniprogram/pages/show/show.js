@@ -1,11 +1,11 @@
 // miniprogram/pages/show/show.js
 const app = getApp();
 
-function fixZero(val){
-   if(val<10){
-     val='0'+val;
-   }
-   return val;
+function fixZero(val) {
+  if (val < 10) {
+    val = '0' + val;
+  }
+  return val;
 }
 
 Page({
@@ -16,23 +16,23 @@ Page({
     arr: [],
     showToolBar: false,
     showIconRotate: false,
-    todayMonth:'',
-    todayDate:'',
+    todayMonth: '',
+    todayDate: '',
     flag: app.globalData.showOverlay
   },
-  onLoad(){
-     let now=new Date();
-     let month=fixZero(now.getMonth()+1);
-     let date=fixZero(now.getDate());
-     this.setData({
-      todayMonth:month,
-      todayDate:date
-     });
+  onLoad() {
+    let now = new Date();
+    let month = fixZero(now.getMonth() + 1);
+    let date = fixZero(now.getDate());
+    this.setData({
+      todayMonth: month,
+      todayDate: date
+    });
 
-     console.log("onload",app.globalData.showOverlay);
+    console.log("onload", app.globalData.showOverlay);
   },
   getReceiver() {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       wx.cloud.callFunction({
         // 要调用的云函数名称
         name: 'login'
@@ -43,9 +43,9 @@ Page({
       })
     });
   },
-  onShow: function(options) {
+  onShow: function (options) {
     this.setData({
-      flag:app.globalData.showOverlay
+      flag: app.globalData.showOverlay
     });
 
     wx.cloud.callFunction({
@@ -56,36 +56,36 @@ Page({
       }
       // 传递给云函数的event参数   .start_time
     }).then(res => { // 成功
-      let resArr=res.result.data;
-      
+      let resArr = res.result.data;
+
       // 为了更好的展示时间
-      for(let i=0;i<resArr.length;i++){
-        let otherString=resArr[i].start_time.substring(8,resArr[i].start_time.length);
+      for (let i = 0; i < resArr.length; i++) {
+        let otherString = resArr[i].start_time.substring(8, resArr[i].start_time.length);
         // console.log(resArr[i].start_time.slice(0,8));
         // console.log('('+this.data.todayMonth+'-'+this.data.todayDate+'日)');
-        if(resArr[i].start_time.slice(0,8)==='('+this.data.todayMonth+'-'+this.data.todayDate+'日)'){
-           resArr[i].start_time="(今天)"+otherString;
+        if (resArr[i].start_time.slice(0, 8) === '(' + this.data.todayMonth + '-' + this.data.todayDate + '日)') {
+          resArr[i].start_time = "(今天)" + otherString;
         }
       }
 
       this.setData({
-        arr:resArr
+        arr: resArr
       })
     }).catch(err => { // 失败
       console.log(err)
     })
   },
-  scroll: function(e) {
+  scroll: function (e) {
     // console.log(e)
   },
   // 是否展开+ 
-  onToggle: function() {
+  onToggle: function () {
     this.setData({
       showToolBar: !this.data.showToolBar
     });
     this.iconToggleRotate();
   },
-  onAdd: function() {
+  onAdd: function () {
     // 判断有无权限
     wx.getUserInfo({
       // 用户已经授权
@@ -119,19 +119,19 @@ Page({
 
   },
 
-  onPersonal: function() {
+  onPersonal: function () {
     wx.navigateTo({
       url: '/pages/aboutMe/aboutMe'
     })
   },
-  iconToggleRotate: function() {
+  iconToggleRotate: function () {
     this.setData({
       showIconRotate: !this.data.showIconRotate
     })
   },
 
 
-  getOrder: function(event) {
+  getOrder: function (event) {
     let that = this;
     // 判断有无权限
     wx.getUserInfo({
@@ -204,7 +204,7 @@ Page({
       }
     })
   },
-  onBorrowReturn: function() {
+  onBorrowReturn: function () {
     // 先确认是否进行授权
     wx.getUserInfo({
       // 用户已经授权
@@ -237,28 +237,58 @@ Page({
 
   },
 
-  cancelShare:function(){
+  cancelShare: function () {
     console.log("helloC");
-    app.globalData.showOverlay=false;
+    app.globalData.showOverlay = false;
     this.setData({
       flag: app.globalData.showOverlay
     })
   },
-  shureShare:function(){
+  shureShare: function () {
     // share to other users
-    //  this.onShareAppMessage();
+    // this.onShareAppMessage();
      
+    
+
     app.globalData.showOverlay = false;
     this.setData({
       flag: app.globalData.showOverlay
     });
   },
 
-  // onShareAppMessage(){
-  //     return {
-  //       title:'快来跟我拼伞哦!!',
-  //       imageUrl:'/miniprogram/images/umbrellaLogo.jpeg'
-  //     }
-  // }
-   
+  //  分享
+   shareEvent:function(option, obj){
+    //  console.log("option",option);
+    //  console.log("obj",obj);
+    let shareObj = {
+      title: obj.title,
+      path: obj.path,
+      imgUrl: obj.imgUrl,
+      success(res){
+        // 转发成功之后的回调
+  　　　 if (res.errMsg == 'shareAppMessage:ok') {}
+      }, 
+      fail(res){
+         // 转发失败之后的回调
+  　　　 if (res.errMsg == 'shareAppMessage:fail cancel') {
+  　　　 // 用户取消转发
+  　　　  } else if (res.errMsg == 'shareAppMessage:fail') {
+  　　　  // 转发失败，其中 detail message 为详细失败信息
+  　　　　}
+      },
+      complete(){
+          // 转发结束之后的回调（转发成不成功都会执行）
+      }
+    };
+    return shareObj;
+  },
+  onShareAppMessage: function(option){
+   console.log("onload");
+    let obj = {
+      title: '快来跟我一起拼伞!!',
+      path: 'pages/show/show',
+      imageUrl: '/miniprogram/images/umbrellaLogo.jpeg'
+    };
+    return this.shareEvent(option, obj);
+  }
 });
