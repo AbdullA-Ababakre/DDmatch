@@ -1,0 +1,38 @@
+<view class="container">
+  <scroll-view scroll-y style="height:100%;" bindscroll="scroll">
+    <block wx:for="{{arr}}" wx:item="item" wx:key="*this" class="card">
+
+      <view class="weui-form-preview block">
+        
+        <view class="weui-form-preview__hd">
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">借伞时间: </view>
+            <view class="weui-form-preview__value_in-hd">{{item.borrowTime}}</view>
+          </view>
+        </view>
+
+        <view class="weui-form-preview__bd">
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">姓名:</view>
+            <view class="weui-form-preview__value">{{item.borrowName}}</view>
+          </view>
+           <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">手机号:</view>
+            <view class="weui-form-preview__value">{{item.borrowPhone}}</view>
+          </view>
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">学号:</view>
+            <view class="weui-form-preview__value">{{item.borrowCard}}</view>
+          </view>
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">借伞地点:</view>
+            <view class="weui-form-preview__value">{{item.borrowLocation}}</view>
+          </view>
+        </view>
+
+      </view>
+
+    </block>
+    <view style="height:150rpx"></view>
+  </scroll-view>
+</view>

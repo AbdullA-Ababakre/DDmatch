@@ -1,0 +1,62 @@
+<scroll-view scroll-y style="height:100%;" bindscroll="scroll">
+  <block wx:for="{{arr}}" wx:item="item" wx:key="*this" class="">
+    <view class="weui-form-preview block">
+      <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">终点: {{item.end}}</view>
+          <view class="weui-form-preview__value_in-hd">{{item.sex}}</view>
+        </view>
+      </view>
+      <view class="weui-form-preview__bd">
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">起点</view>
+          <view class="weui-form-preview__value">{{item.start}}</view>
+        </view>
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">出发时间</view>
+          <view class="weui-form-preview__value">{{item.start_time}}</view>
+        </view>
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">报酬</view>
+          <view class="weui-form-preview__value">{{item.money}}</view>
+        </view>
+      </view>
+
+      <view id="{{item._id}}" class="weui-form-preview__ft" bindtap="getOrder">
+        <view class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">接单</view>
+      </view>
+    
+    </view>
+  </block>
+  <view style="height:150rpx"></view>
+
+</scroll-view>
+
+
+<view class="add {{showToolBar?'active':''}}">
+  <view class="add-item" data-type="0" bindtap="onAdd">
+    <text class="add-item-txt">拼伞</text>
+  </view>
+  <view class="add-item" data-type="1" bindtap="onBorrowReturn">
+    <text class="add-item-txt">借还伞</text>
+  </view>
+  <view class="add-item" data-type="2" bindtap="onPersonal">
+    <text class="add-item-txt">个人</text>
+  </view>
+  <view class="add-icon" bindtap="onToggle">
+    <text class="add-icon-txt {{showIconRotate?'addIconRotate':''}}">+</text>
+  </view>
+</view>
+
+
+
+<view class="overlay {{flag===true?'':'nodisplay'}}"></view>
+<view class="dialog {{flag===true?'':'nodisplay'}}">
+ <view class="dialog-bd">
+   <view>多多分享,可以提高成功率哦!!</view>
+ </view>
+ <view class="dialog-ft">
+    <button class="ft-btn" bindtap="cancelShare">残忍拒绝</button>
+    <button class="ft-btn" bindtap="shureShare" style="background-color:blue;color:white;" data-name="shareBtn" open-type="share" plain="true">分享!!!!</button>
+ </view>
+</view>

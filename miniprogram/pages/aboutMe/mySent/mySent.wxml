@@ -1,0 +1,36 @@
+<view class="container">
+  <scroll-view scroll-y style="height:100%;" bindscroll="scroll">
+    <block wx:for="{{arr}}" wx:item="item" wx:key="*this" class="card">
+
+      <view class="weui-form-preview block">
+        <view class="weui-form-preview__hd">
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">终点: {{item.end}}</view>
+            <view class="weui-form-preview__value_in-hd">{{item.sex}}</view>
+          </view>
+        </view>
+        <view class="weui-form-preview__bd">
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">起点</view>
+            <view class="weui-form-preview__value">{{item.start}}</view>
+          </view>
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">出发时间</view>
+            <view class="weui-form-preview__value">{{item.start_time}}</view>
+          </view>
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">报酬</view>
+            <view class="weui-form-preview__value">{{item.money}}</view>
+          </view>
+        </view>
+
+        <view id="{{item._id}}" class="weui-form-preview__ft">
+          <view wx:if="{{item.receiver!==''}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">已经有人接单</view>
+          <view wx:else class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">还没被接</view>
+        </view>
+      </view>
+      
+    </block>
+    <view style="height:150rpx"></view>
+  </scroll-view>
+</view>
