@@ -8,6 +8,9 @@ function fixZero(val) {
   return val;
 }
 
+
+
+
 Page({
   /**
    * 页面的初始数据
@@ -28,8 +31,6 @@ Page({
       todayMonth: month,
       todayDate: date
     });
-
-    console.log("onload", app.globalData.showOverlay);
   },
   getReceiver() {
     return new Promise(function (resolve, reject) {
@@ -67,6 +68,14 @@ Page({
           resArr[i].start_time = "(今天)" + otherString;
         }
       }
+       
+      // 为了让时间提前的置顶
+      // for(let i=0;i<resArr.length;i++){
+      //   console.log(i,resArr[i]);
+      // }
+
+      resArr.sort((a,b) => (a.start_time > b.start_time ) ? 1 : ((b.start_time  > a.start_time ) ? -1 : 0));
+     
 
       this.setData({
         arr: resArr
